@@ -2,6 +2,9 @@ import os
 import torch
 from PIL import Image
 from torch.utils.data import Dataset
+from torchvision import transforms
+
+to_tensor = transforms.ToTensor()
 
 
 class LLVIPDataset(Dataset):
@@ -39,8 +42,8 @@ class LLVIPDataset(Dataset):
                 boxes.append([class_id, cx, cy, w, h])
 
         boxes = torch.tensor(boxes, dtype=torch.float32)
-        rgb_img = torch.tensor(rgb_img, dtype=torch.float32)
-        infra_img = torch.tensor(infra_img, dtype=torch.float32)
+        rgb_img = to_tensor(rgb_img)
+        infra_img = to_tensor(infra_img)
 
         # if self.transforms is not None:
         #     rgb_img, infra_img, boxes = self.transforms(rgb_img, infra_img, boxes)
